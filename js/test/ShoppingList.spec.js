@@ -1,6 +1,6 @@
+var newList;
 
 describe('ShoppingListItem', function() {
-  var newList;
 
   beforeEach(function() {
     newList = new ShoppingListItem('Donald Trump', 'Republican Nominee');
@@ -24,11 +24,28 @@ describe('ShoppingListItem', function() {
 
   it('should have property "is_done"', function() {
     expect(newList).to.have.property('is_done');
-    // expect(newList).
   });
 });
 
 describe('ShoppingListItem Methods', function() {
 
+  beforeEach(function() {
+    newList = new ShoppingListItem('Donald Trump', 'Republican Nominee');
+    expect(newList).to.be.an.instanceof(ShoppingListItem);
+  });
 
-})
+  it('should have a method "check"', function() {
+    expect(newList).to.have.property('check');
+    expect(newList.check).to.be.an('function');
+    newList.check();
+    expect(newList.is_done).to.equal(true);
+  });
+
+  it('should have a method "uncheck"', function() {
+    expect(newList).to.have.property('uncheck');
+    expect(newList.uncheck).to.be.an('function');
+    newList.uncheck();
+    expect(newList.is_done).to.equal(false);
+  });
+
+});
