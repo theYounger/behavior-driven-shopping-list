@@ -56,9 +56,16 @@ describe('ShoppingListItem', function() {
 
 describe('ShoppingList', function() {
 
+
   beforeEach(function() {
     newList = new ShoppingList();
     expect(newList).to.be.an.instanceof(ShoppingList);
+
+    newItem = new ShoppingListItem('Donald Trump', 'Republican Nominee');
+    expect(newItem).to.be.an.instanceof(ShoppingListItem);
+
+    oldItem = new ShoppingListItem('Hillary Clinton', 'Failure at Life');
+    expect(oldItem).to.be.an.instanceof(ShoppingListItem);
   });
 
   it('should be a function', function() {
@@ -72,24 +79,54 @@ describe('ShoppingList', function() {
 
   describe('ShoppingList Methods', function() {
 
-    it('should be a function', function() {
+    it('should have method "listReset"', function() {
       expect(newList.listReset).to.exist;
       expect(newList.listReset).to.be.an('function');
       newList.listReset();
-      expect(newList.listReset).to.equal([]);
+      expect(newList.items).to.be.empty;
     });
 
-    it('should be a function', function() {
+    it('should have method "addItem"', function() {
       expect(newList.addItem).to.exist;
       expect(newList.addItem).to.be.an('function');
-      newList.listReset();
-      newList.addItem(shopItem);
-      if(shopItem instanceof newListItem) {
-        expect(newList.items[newList.items.length - 1] === shopItem);
-      } else {
-        expect(newList.addItem(shopItem)).to.equal('Error!');
-      }
+      newList.addItem(newItem);
+      expect(newList.items).to.contain(newItem);
     });
 
+    it('addItem should throw appropriate errors', function() {
+      expect(newList.addItem.bind(newList, Number)).to.throw(Error);
+      expect(newList.addItem.bind(newList, Boolean)).to.throw(Error);
+      expect(newList.addItem.bind(newList, String)).to.throw(Error);
+      expect(newList.addItem.bind(newList, Array)).to.throw(Error);
+      expect(newList.addItem.bind(newList, Function)).to.throw(Error);
+    });
+
+    it('should have method "removeItem"', function() {
+      newList.addItem(newItem);
+      expect(newList.removeItem).to.exist;
+      expect(newList.removeItem).to.be.an('function');
+      newList.removeItem(newItem);
+      expect(newList.items).to.not.contain(newItem);
+    });
+
+    it('removeItem should pop item if no argument', function() {
+      newList.addItem(oldItem);
+      newList.addItem(newItem);
+      console.log(newList.items);
+      newList.removeItem();
+      console.log('hi');
+      expect(newList.items).to.not.contain(newItem);
+    });
+
+    it('removeItem should throw appropriate errors', function() {
+      expect(newList.removeItem.bind(newList, Number)).to.throw(Error);
+      expect(newList.removeItem.bind(newList, Boolean)).to.throw(Error);
+      expect(newList.removeItem.bind(newList, String)).to.throw(Error);
+      expect(newList.removeItem.bind(newList, Array)).to.throw(Error);
+      expect(newList.removeItem.bind(newList, Function)).to.throw(Error);
+    });
+
+
   });
+
 });
