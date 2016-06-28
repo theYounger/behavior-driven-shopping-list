@@ -133,7 +133,6 @@ describe('ShoppingList', function() {
 
     it('should have a method "render"', function() {
       newList.addItem(oldItem);
-      newList.addItem(newItem);
       console.log(newList.render());
       expect(newList).to.have.property('render');
       expect(newList.render).to.be.an('function');
@@ -143,11 +142,8 @@ describe('ShoppingList', function() {
   <span>conditioner</span>
   <span>makes hair smooth and silky</span>
 </li>
-<li class="completed_false">
-  <span>shampoo</span>
-  <span>cleans hair</span>
-</li>
-</ul>`);
+</ul>`
+);
     });
 
   });

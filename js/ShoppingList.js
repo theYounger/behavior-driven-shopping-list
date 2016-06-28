@@ -36,13 +36,13 @@ function ShoppingList() {
   this.render = function() {
     var htmlList = this.items.map(function(ele) {
       return ele.render();
-    }).join(' \n ');
+    }).join(' \n');
 
-    var htmlFull =`<ul>
-  ${htmlList}
+    var htmlFull =
+`<ul>
+${htmlList}
 </ul>`;
     return htmlFull;
   };
 }
 
-module.exports = ShoppingList;
