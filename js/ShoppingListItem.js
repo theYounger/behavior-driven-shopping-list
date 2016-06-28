@@ -8,5 +8,7 @@ function ShoppingListItem(name, description) {
   this.uncheck = function() {
     this.is_done = false;
   };
-}
+  // this.render = function(string) {
 
+  // }
+}
