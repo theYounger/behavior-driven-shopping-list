@@ -1,10 +1,12 @@
+
 var newItem;
 var newList;
+var oldItem;
 
 describe('ShoppingListItem', function() {
 
   beforeEach(function() {
-    newItem = new ShoppingListItem('Donald Trump', 'Republican Nominee');
+    newItem = new ShoppingListItem('shampoo', 'cleans hair');
     expect(newItem).to.be.an.instanceof(ShoppingListItem);
   });
 
@@ -15,12 +17,12 @@ describe('ShoppingListItem', function() {
 
   it('should have property "name"', function() {
     expect(newItem).to.have.property('name');
-    expect(newItem.name).to.equal('Donald Trump');
+    expect(newItem.name).to.equal('shampoo');
   });
 
   it('should have property "description"', function() {
     expect(newItem).to.have.property('description');
-    expect(newItem.description).to.equal('Republican Nominee');
+    expect(newItem.description).to.equal('cleans hair');
   });
 
   it('should have property "is_done"', function() {
@@ -45,12 +47,16 @@ describe('ShoppingListItem', function() {
 
   });
 
-  // it('should have a method "render"', function() {
-  //   expect(newList.tohave.property('uncheck'));
-  //   expect(newList.render).to.be.an('function');
-  //   newList.render();
-  //   expe
-  // });
+  it('should have a method "render"', function() {
+    console.log(newItem.render());
+    expect(newItem).to.have.property('render');
+    expect(newItem.render).to.be.an('function');
+    expect(newItem.render()).to.equal(
+`<li class="completed_${newItem.is_done}">
+  <span>${newItem.name}</span>
+  <span>${newItem.description}</span>
+</li>`);
+  });
 
 });
 
@@ -61,14 +67,15 @@ describe('ShoppingList', function() {
     newList = new ShoppingList();
     expect(newList).to.be.an.instanceof(ShoppingList);
 
-    newItem = new ShoppingListItem('Donald Trump', 'Republican Nominee');
+    newItem = new ShoppingListItem('shampoo', 'cleans hair');
     expect(newItem).to.be.an.instanceof(ShoppingListItem);
 
-    oldItem = new ShoppingListItem('Hillary Clinton', 'Failure at Life');
+    oldItem = new ShoppingListItem('conditioner', 'makes hair smooth and silky');
     expect(oldItem).to.be.an.instanceof(ShoppingListItem);
   });
 
   it('should be a function', function() {
+    console.log(oldItem.render());
     expect(ShoppingList).to.exist;
     expect(ShoppingList).to.be.an('function');
   });
@@ -112,9 +119,7 @@ describe('ShoppingList', function() {
     it('removeItem should pop item if no argument', function() {
       newList.addItem(oldItem);
       newList.addItem(newItem);
-      console.log(newList.items);
       newList.removeItem();
-      console.log('hi');
       expect(newList.items).to.not.contain(newItem);
     });
 
@@ -126,6 +131,24 @@ describe('ShoppingList', function() {
       expect(newList.removeItem.bind(newList, Function)).to.throw(Error);
     });
 
+    it('should have a method "render"', function() {
+      newList.addItem(oldItem);
+      newList.addItem(newItem);
+      console.log(newList.render());
+      expect(newList).to.have.property('render');
+      expect(newList.render).to.be.an('function');
+      expect(newList.render()).to.equal(
+`<ul>
+<li class="completed_false">
+  <span>conditioner</span>
+  <span>makes hair smooth and silky</span>
+</li>
+<li class="completed_false">
+  <span>shampoo</span>
+  <span>cleans hair</span>
+</li>
+</ul>`);
+    });
 
   });
 

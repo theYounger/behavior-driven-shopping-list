@@ -1,5 +1,6 @@
 
 function ShoppingList() {
+
   this.items = [];
   this.listReset = function() {
     this.items = [];
@@ -9,24 +10,39 @@ function ShoppingList() {
     if(shopItem instanceof ShoppingListItem) {
       this.items.push(shopItem);
     } else {
-      throw new Error('Addition error');
+      throw new Error('Addition error!');
     }
 
   };
   this.removeItem = function(shopItem) {
-    if(shopItem instanceof ShoppingListItem) {
-      if(shopItem !== undefined) {
-        if(this.items.indexOf(shopItem) !== -1) {
-          this.items.splice(this.items.indexOf(shopItem), 1);
-        } else {
-          throw new Error('Removal error');
-        }
+
+    if(shopItem === undefined) {
+      this.items.pop();
+      return;
+    }
+
+    if(!(shopItem instanceof ShoppingListItem)) {
+      throw new Error('Removal error!');
+    }
+
+    if(shopItem !== undefined) {
+      if(this.items.indexOf(shopItem) !== -1) {
+        this.items.splice(this.items.indexOf(shopItem), 1);
       } else {
-        this.items.pop();
+        throw new Error('Item not found!');
       }
-    } else {
-      throw new Error('Removal error');
     }
   };
+  this.render = function() {
+    var htmlList = this.items.map(function(ele) {
+      return ele.render();
+    }).join(' \n ');
 
+    var htmlFull =`<ul>
+  ${htmlList}
+</ul>`;
+    return htmlFull;
+  };
 }
+
+module.exports = ShoppingList;
